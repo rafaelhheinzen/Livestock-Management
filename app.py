@@ -16,6 +16,13 @@ database.initialize_database() #Creates the database right when the app starts
 def home():
     return render_template("index.html")
 
+
+@app.route('/admin')
+def admin():
+    all_users = database.search_all_users()
+
+    return render_template("admin.html", all_users=all_users)
+
 @app.route('/dashboard')
 def dashboard():
     date = get_todayDate()

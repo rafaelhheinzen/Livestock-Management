@@ -1,0 +1,15 @@
+.users{
+    justify-self: center;
+}
+
+.users h2{
+    padding-top: 20px;
+}
+
+.users p{
+    display: inline;
+}
+
+.user{
+    padding-top: 20px;
+}

@@ -1,24 +1,31 @@
 import sqlite3
 from datetime import datetime
 
-#Get time
+### TIME SETUP
 def get_time():
     time = datetime.now()
     date = time.strftime("%m/%d/%Y")
 
     return date
 
-
+### DATABASE SETUP
 def database_connect():
     conn = sqlite3.connect("data.db", timeout=10) #Connects to the database file
     conn.row_factory = sqlite3.Row #Allows access the rows by the name (e.g: line["name"]) instead of the index (e.g: line[0])
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
-
-
 def initialize_database():
     conn = database_connect()
+
+    #USERS TABLE
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                 name TEXT UNIQUE,
+                 password TEXT
+                 )
+    """)
 
 
     #ANIMAL TABLE
@@ -54,7 +61,7 @@ def initialize_database():
     conn.close()
 
 
-#CREATE INFO
+### CREATE INFO
 
 def new_animal(tag, arrival_day, race, sex, birth_day, weight):
     conn = database_connect()
@@ -132,6 +139,11 @@ def add_weight(cattle_id, new_weight):
         conn.close()
 
 
+
+
+
+
+### GET INFO
 def search_all():
     conn = database_connect()
     animal_data = conn.execute("""
@@ -169,10 +181,14 @@ def search_all():
 
     return animals
 
+def search_all_users():
+    conn = database_connect()
+    try:
+        users = conn.execute("SELECT id, name, password FROM users").fetchall()
+        return users
+    finally:
+        conn.close()
 
-
-
-### GET INFO
 def get_animal_count():
     conn = database_connect()
     data = conn.execute("SELECT COUNT(*) FROM cattle")
@@ -181,8 +197,9 @@ def get_animal_count():
 
     return count    
 
+
+
 ### CATTLE ANALYSIS
-    
 def get_animal_status(cattle_id):
     conn = database_connect()
 
@@ -227,7 +244,6 @@ def get_animal_status(cattle_id):
 
     else:
         return "critical"
-    
 
 def get_status_summary():
 
