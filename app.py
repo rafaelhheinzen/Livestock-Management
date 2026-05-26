@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 database.initialize_database() #Creates the database right when the app starts
 
-@app.route('/')
+@app.route("/", methods=["GET", "POST"])
 def home():
     return render_template("index.html")
 
