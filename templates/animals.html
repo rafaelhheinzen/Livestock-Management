@@ -22,7 +22,7 @@
         </div>
     </section>
 
-    <section>
+    <section class="animalTable">
 
 
         <table>
@@ -46,7 +46,13 @@
                 <td>{{ animal['birth_day'] }}</td>
                 <td>{{ animal['weight'] }}</td>
                 <td>
-                    <span class="status {{ animal['health_status'] }}">
+                    <span class="status 
+                        {% if animal['health_status'] == 'Lack of info to return status' %}
+                            no-info
+                        {% else %}
+                            {{ animal['health_status'] }}
+                        {% endif %}
+                    ">
                         {{ animal['health_status'].capitalize() }}
                     </span>
                 </td>

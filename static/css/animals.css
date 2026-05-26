@@ -4,6 +4,11 @@
     color: white;
 }
 
+.no-info {
+    background-color: #e0e0e0;
+    color: black;
+}
+
 .healthy {
     background-color: #3f7d4e;
 }
@@ -14,4 +19,41 @@
 
 .critical {
     background-color: #d9534f;
+}
+
+.deleteConfirmBtn {
+    width: 100px;
+    height: 30px;
+    background-color: rgb(180, 18, 18);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.editBtn{
+    width: 100px;
+    height: 30px;
+    background-color: rgb(175, 158, 0);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.animalTable {
+    display: flex;
+    justify-content: center;    
+    align-items: center;   
+    width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td {
+    border: 1px solid #ccc;
+    padding: 10px;
 }
