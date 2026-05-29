@@ -17,7 +17,7 @@ This project provides a lightweight management system that allows users to track
 * Herd tracking system
 * Weight history monitoring
 * Alert system for anomalies
-* Role-based access (basic security)
+* User role-based access (basic security)
 
 ## Tech Stack
 
@@ -25,9 +25,3 @@ This project provides a lightweight management system that allows users to track
 * JavaScript
 * HTML/CSS
 * SQLite
-
-## Future Improvements
-
-* Machine learning for weight prediction
-* Integration with weather data
-* Mobile-friendly interface
