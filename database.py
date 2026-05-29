@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+from werkzeug.security import generate_password_hash
 
 ### TIME SETUP
 def get_time():
@@ -138,7 +139,14 @@ def add_weight(cattle_id, new_weight):
     finally:
         conn.close()
 
-
+def create_user(name, password):
+    conn = database_connect()
+    try:
+        hashed = generate_password_hash(password)
+        conn.execute("INSERT INTO users (name, password) VALUES (?, ?)", (name, hashed))
+        conn.commit()
+    finally:
+        conn.close()
 
 
 
@@ -186,6 +194,14 @@ def search_all_users():
     try:
         users = conn.execute("SELECT id, name, password FROM users").fetchall()
         return users
+    finally:
+        conn.close()
+
+def search_user_by_name(name):
+    conn = database_connect()
+    try:
+        user = conn.execute("SELECT id, name, password FROM users WHERE name = ?", (name,)).fetchone()
+        return user
     finally:
         conn.close()
 

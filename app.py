@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect
+from auth import validate_login
 from datetime import datetime
 import database
 def get_todayDate():
@@ -14,14 +15,35 @@ database.initialize_database() #Creates the database right when the app starts
 
 @app.route("/", methods=["GET", "POST"])
 def home():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        if validate_login(username, password):
+            return redirect("/dashboard")
+        else:
+            return render_template("index.html", error="Invalid Credentials")
+        
     return render_template("index.html")
 
 
-@app.route('/admin')
+@app.route('/admin', methods=["GET", "POST"])
 def admin():
-    all_users = database.search_all_users()
+    error = None
+    success = None
 
-    return render_template("admin.html", all_users=all_users)
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        if not username or not password:
+            error = "Both fields are required"
+        else:
+            database.create_user(username, password)
+            success = "User created successfully"
+
+    all_users = database.search_all_users()
+    return render_template("admin.html", all_users=all_users, error=error, success=success)
 
 @app.route('/dashboard')
 def dashboard():

@@ -22,6 +22,26 @@
         </div>
     </section>
 
+    <section>
+        <h2>Create User</h2>
+
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
+
+        {% if success %}
+            <p>{{ success }}</p>
+        {% endif %}
+        
+        <form action="/admin" method="post">
+
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <button>Create User</button>
+
+        </form>
+    </section>
+
     <section class="users">
         <h2>Users</h2>
 
