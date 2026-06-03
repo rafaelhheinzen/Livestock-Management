@@ -22,8 +22,10 @@
         </div>
     </section>
 
-    <section>
+    <section class="users">
+
         <h2>Create User</h2>
+        <h3>Users: {{ user_count }}</h3>
 
         {% if error %}
             <p>{{ error }}</p>
@@ -40,18 +42,20 @@
             <button>Create User</button>
 
         </form>
-    </section>
 
-    <section class="users">
+        
+    <section>
         <h2>Users</h2>
+        <h3>Current Users: {{ user_count }}</h3>
 
         {% for user in all_users %}
         <div class="user">
         <p>Id: {{ user['id'] }}</p>
         <p>Name: {{ user['name'] }}</p>
-        <p>Password: {{ user['password']}}</p>
         </div>
         {% endfor %}
     </section>
+    </section>
+
 </body>
 </html>

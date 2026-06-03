@@ -32,6 +32,8 @@ def admin():
     error = None
     success = None
 
+    user_count = database.get_user_count()
+
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -43,7 +45,7 @@ def admin():
             success = "User created successfully"
 
     all_users = database.search_all_users()
-    return render_template("admin.html", all_users=all_users, error=error, success=success)
+    return render_template("admin.html", all_users=all_users, error=error, success=success, user_count=user_count)
 
 @app.route('/dashboard')
 def dashboard():

@@ -24,7 +24,8 @@ def initialize_database():
         CREATE TABLE IF NOT EXISTS users (
                  id INTEGER PRIMARY KEY AUTOINCREMENT,
                  name TEXT UNIQUE,
-                 password TEXT
+                 password TEXT,
+                 role TEXT DEFAULT 'worker'
                  )
     """)
 
@@ -57,6 +58,17 @@ def initialize_database():
             ON DELETE CASCADE -- When delete the animal from table cattle, also deletes its weight here
             )
                  """)
+    
+
+    data = conn.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+    if data == 0:
+
+        hashed = generate_password_hash("admin123")
+
+        conn.execute("""
+            INSERT INTO users (name, password, role)
+            VALUES (?, ?, ?)
+        """, ("admin", hashed, "admin"))
 
     conn.commit()
     conn.close()
@@ -204,6 +216,18 @@ def search_user_by_name(name):
         return user
     finally:
         conn.close()
+
+
+def get_user_count():
+    conn = database_connect()
+
+    data = conn.execute(
+        "SELECT COUNT(*) FROM users"
+    ).fetchone()[0]
+
+    conn.close()
+
+    return data
 
 def get_animal_count():
     conn = database_connect()
