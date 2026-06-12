@@ -151,11 +151,11 @@ def add_weight(cattle_id, new_weight):
     finally:
         conn.close()
 
-def create_user(name, password):
+def create_user(name, password, role):
     conn = database_connect()
     try:
         hashed = generate_password_hash(password)
-        conn.execute("INSERT INTO users (name, password) VALUES (?, ?)", (name, hashed))
+        conn.execute("INSERT INTO users (name, password, role) VALUES (?, ?, ?)", (name, hashed, role))
         conn.commit()
     finally:
         conn.close()
@@ -212,7 +212,7 @@ def search_all_users():
 def search_user_by_name(name):
     conn = database_connect()
     try:
-        user = conn.execute("SELECT id, name, password FROM users WHERE name = ?", (name,)).fetchone()
+        user = conn.execute("SELECT id, name, password, role FROM users WHERE name = ?", (name,)).fetchone()
         return user
     finally:
         conn.close()

@@ -1,7 +1,11 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from auth import validate_login
 from datetime import datetime
 import database
+
+
+
+
 def get_todayDate():
     time = datetime.now()
     date = time.strftime("%m/%d/%Y")
@@ -10,21 +14,35 @@ def get_todayDate():
 
 
 app = Flask(__name__)
+app.secret_key = "secret-key"
 
 database.initialize_database() #Creates the database right when the app starts
 
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+        username = request.form.get("username")
+        password = request.form.get("password")
 
         if validate_login(username, password):
+            user = database.search_user_by_name(username)
+            
+            session['user_id'] = user['id']
+            session["username"] = user["name"]
+            session["role"] = user["role"]
+            
             return redirect("/dashboard")
         else:
             return render_template("index.html", error="Invalid Credentials")
         
     return render_template("index.html")
+
+@app.route("/test")
+def test():
+    return f"""
+    User: {session.get('username')}<br>
+    Role: {session.get('role')}
+    """
 
 
 @app.route('/admin', methods=["GET", "POST"])
@@ -37,11 +55,12 @@ def admin():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        role = request.form["role"]
 
         if not username or not password:
             error = "Both fields are required"
         else:
-            database.create_user(username, password)
+            database.create_user(username, password, role)
             success = "User created successfully"
 
     all_users = database.search_all_users()
