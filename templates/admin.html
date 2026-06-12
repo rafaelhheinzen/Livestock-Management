@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/menu.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/admin.css') }}">
 </head>
+
 <body>
 
     <div class="titleSection">
@@ -19,6 +21,9 @@
             <a href="/dashboard">Dashboard</a>
             <a href="/animals">Animals</a>
             <a href="/register">Register</a>
+            {% if session["role"] == "admin" %}
+            <a href="/admin">Admin</a>
+            {% endif %}
         </div>
     </section>
 
@@ -28,13 +33,13 @@
         <h3>Users: {{ user_count }}</h3>
 
         {% if error %}
-            <p>{{ error }}</p>
+        <p>{{ error }}</p>
         {% endif %}
 
         {% if success %}
-            <p>{{ success }}</p>
+        <p>{{ success }}</p>
         {% endif %}
-        
+
         <form action="/admin" method="post">
 
             <input type="text" name="username" placeholder="Username">
@@ -47,19 +52,20 @@
 
         </form>
 
-        
-    <section>
-        <h2>Users</h2>
-        <h3>Current Users: {{ user_count }}</h3>
 
-        {% for user in all_users %}
-        <div class="user">
-        <p>Id: {{ user['id'] }}</p>
-        <p>Name: {{ user['name'] }}</p>
-        </div>
-        {% endfor %}
-    </section>
+        <section>
+            <h2>Users</h2>
+            <h3>Current Users: {{ user_count }}</h3>
+
+            {% for user in all_users %}
+            <div class="user">
+                <p>Id: {{ user['id'] }}</p>
+                <p>Name: {{ user['name'] }}</p>
+            </div>
+            {% endfor %}
+        </section>
     </section>
 
 </body>
+
 </html>

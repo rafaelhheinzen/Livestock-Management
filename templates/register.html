@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animals Register</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/menu.css') }}">
 </head>
+
 <body>
 
     <div class="titleSection">
@@ -18,22 +20,26 @@
             <a href="/dashboard">Dashboard</a>
             <a href="/animals">Animals</a>
             <a href="/register">Register</a>
+            {% if session["role"] == "admin" %}
+            <a href="/admin">Admin</a>
+            {% endif %}
         </div>
     </section>
     <section>
         <h2>Add animals</h2>
         <form action="/register" method="post">
-        <input type="text" placeholder="Tag" name="input_tag" required>
-        <input type="text" placeholder="Race" name="input_race" id="">
-        <select name="input_sex" required>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-        </select>
-        <input type="date" placeholder="Birth Day" name="input_birthday" id="">
-        <input type="number" placeholder="Weight" name="input_weight" id="">
-        <button type="submit">Submit</button>
+            <input type="text" placeholder="Tag" name="input_tag" required>
+            <input type="text" placeholder="Race" name="input_race" id="">
+            <select name="input_sex" required>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+            <input type="date" placeholder="Birth Day" name="input_birthday" id="">
+            <input type="number" placeholder="Weight" name="input_weight" id="">
+            <button type="submit">Submit</button>
         </form>
     </section>
-    
+
 </body>
+
 </html>

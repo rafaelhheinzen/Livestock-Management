@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/menu.css') }}">
 </head>
+
 <body>
     <section class="welcome">
         <h1>Livestock Management</h1>
@@ -15,25 +17,25 @@
 
     <section class="login">
 
-            {% if error %}
-                <p>{{ error }}</p>
-            {% endif %}
+        {% if error %}
+        <p>{{ error }}</p>
+        {% endif %}
 
-            <form method="POST">
+        <form method="POST">
 
-                <input name="username" type="text" placeholder="Username">
+            <input name="username" type="text" placeholder="Username">
 
-                <br>
+            <br>
 
-                <input name="password" type="password" placeholder="Password">
+            <input name="password" type="password" placeholder="Password">
 
-                <br>
+            <br>
 
-                <button type="submit">
-                    Log in
-                </button>
+            <button type="submit">
+                Log in
+            </button>
 
-            </form>
+        </form>
     </section>
 
 
@@ -44,8 +46,8 @@
     </section>
 
     <section class="dashboard">
-    
-        
+
+
 
 
     </section>
@@ -53,5 +55,6 @@
 
 
 </body>
+
 </html>
 <script src="{{ url_for('static', filename='js/login.js') }}"></script>

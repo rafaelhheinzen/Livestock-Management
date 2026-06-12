@@ -17,6 +17,7 @@ app = Flask(__name__)
 app.secret_key = "secret-key"
 
 database.initialize_database() #Creates the database right when the app starts
+    
 
 @app.route("/", methods=["GET", "POST"])
 def home():

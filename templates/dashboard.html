@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/menu.css') }}">
 </head>
+
 <body>
 
     <div class="titleSection">
@@ -19,6 +21,9 @@
             <a href="/dashboard">Dashboard</a>
             <a href="/animals">Animals</a>
             <a href="/register">Register</a>
+            {% if session["role"] == "admin" %}
+            <a href="/admin">Admin</a>
+            {% endif %}
         </div>
     </section>
 
@@ -37,11 +42,15 @@
             <ul id="animalsRequiringAttentionList" style="display: none;">
                 <h3>Animals Requiring Attention:</h3>
                 {% for animal in attention_animals %}
-                    <li><p>{{ animal }} - Attention</p></li>
+                <li>
+                    <p>{{ animal }} - Attention</p>
+                </li>
                 {% endfor %}
 
                 {% for animal in critical_animals %}
-                    <li><p>{{ animal }} - Critical</p></li>
+                <li>
+                    <p>{{ animal }} - Critical</p>
+                </li>
                 {% endfor %}
             </ul>
 
@@ -59,6 +68,7 @@
         </div>
     </section>
 </body>
+
 </html>
 
 <script src="/static/js/dashboard.js"></script>
