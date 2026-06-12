@@ -65,7 +65,11 @@ def admin():
             success = "User created successfully"
 
     all_users = database.search_all_users()
-    return render_template("admin.html", all_users=all_users, error=error, success=success, user_count=user_count)
+    
+    if session["role"] == "admin":
+        return render_template("admin.html", all_users=all_users, error=error, success=success, user_count=user_count)
+    else:
+        return redirect("/dashboard")
 
 @app.route('/dashboard')
 def dashboard():
