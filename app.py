@@ -13,11 +13,12 @@ def get_todayDate():
     return date
 
 
+
 app = Flask(__name__)
 app.secret_key = "secret-key"
 
 database.initialize_database() #Creates the database right when the app starts
-    
+
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -66,13 +67,18 @@ def admin():
 
     all_users = database.search_all_users()
     
-    if session["role"] == "admin":
+    if session.get("username") == "admin":
         return render_template("admin.html", all_users=all_users, error=error, success=success, user_count=user_count)
     else:
-        return redirect("/dashboard")
+        return redirect("/")
 
 @app.route('/dashboard')
 def dashboard():
+    if session.get("username") is None:
+        return redirect("/")
+    
+    
+    
     date = get_todayDate()
 
     total_herd = database.get_animal_count()
@@ -83,6 +89,7 @@ def dashboard():
 
     missing_health_updates = 2
     recent_alerts = 1
+
     return render_template("dashboard.html",
                            date=date,
 
@@ -101,6 +108,9 @@ def dashboard():
 
 @app.route("/register", methods=["GET","POST"])
 def register():
+    if session.get("username") is None:
+        return redirect("/")
+    
     date = get_todayDate()
     if request.method == "POST":
         arrival_day = database.get_time()
@@ -118,10 +128,13 @@ def register():
 
 @app.route("/animals")
 def animals():
+    if session.get("username") is None:
+        return redirect("/")
+    
     date = get_todayDate()
     animal_data = database.search_all()
     status_filter = request.args.get("status")
-
+    
     return render_template(
         "animals.html",
         animal_list=animal_data,
@@ -131,13 +144,21 @@ def animals():
 
 @app.route("/delete", methods=["POST"])
 def delete():
+    
+    if session.get("username") is None:
+        return redirect("/")
+    
     delete_id = request.form.get("animal_id")
     if delete_id:
         database.delete_animal(int(delete_id)) # SQLite can't receive an string. To make sure I convert everytime here.
+        
     return redirect("/animals")
 
 @app.route("/edit", methods=["GET","POST"])
 def edit():
+    if session.get("username") is None:
+        return redirect("/")
+    
     if request.method == "POST":
         cattle_id = request.form.get("animal_id")
         new_weight = request.form.get("weight")
