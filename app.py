@@ -31,7 +31,7 @@ def home():
             
             session['user_id'] = user['id']
             session["username"] = user["name"]
-            session["role"] = user["role"]
+            session["permissions"] = user["permissions"]
             
             return redirect("/dashboard")
         else:
@@ -43,7 +43,7 @@ def home():
 def test():
     return f"""
     User: {session.get('username')}<br>
-    Role: {session.get('role')}
+    Permissions: {session.get('permissions')}
     """
 
 
@@ -57,12 +57,12 @@ def admin():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        role = request.form["role"]
+        permissions = request.form["permissions"]
 
         if not username or not password:
             error = "Both fields are required"
         else:
-            database.create_user(username, password, role)
+            database.create_user(username, password, permissions)
             success = "User created successfully"
 
     all_users = database.search_all_users()

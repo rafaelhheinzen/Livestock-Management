@@ -20,8 +20,10 @@
         <div>
             <a href="/dashboard">Dashboard</a>
             <a href="/animals">Animals</a>
+            {% if session["permissions"] == "read-&-write" or session["permissions"] == "admin" %}
             <a href="/register">Register</a>
-            {% if session["role"] == "admin" %}
+            {% endif %}
+            {% if session["permissions"] == "admin" %}
             <a href="/admin">Admin</a>
             {% endif %}
         </div>
@@ -41,6 +43,7 @@
                 <td>Status</td>
             </tr>
 
+            
             {% for animal in animal_list %}
 
             <tr>
@@ -61,6 +64,7 @@
                         {{ animal['health_status'].capitalize() }}
                     </span>
                 </td>
+                {% if session["permissions"] == "read-&-write" or session["permissions"] == "admin" %}
                 <td>
                     <form action="/delete" method="post">
                         <input type="hidden" name="animal_id" value="{{ animal['id'] }}">
@@ -76,6 +80,7 @@
                         <button class="editConfirmBtn" type="submit">Confirm</button>
                     </form>
                 </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </table>
