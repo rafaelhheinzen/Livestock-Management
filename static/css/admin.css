@@ -13,3 +13,20 @@
 .user{
     padding-top: 20px;
 }
+
+.userTable {
+    display: flex;
+    justify-content: center;    
+    align-items: center;   
+    width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td {
+    border: 1px solid #ccc;
+    padding: 10px;
+}

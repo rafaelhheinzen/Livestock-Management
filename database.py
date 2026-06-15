@@ -204,7 +204,7 @@ def search_all():
 def search_all_users():
     conn = database_connect()
     try:
-        users = conn.execute("SELECT id, name, password FROM users").fetchall()
+        users = conn.execute("SELECT id, name, permissions FROM users").fetchall()
         return users
     finally:
         conn.close()

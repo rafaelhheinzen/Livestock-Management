@@ -32,7 +32,6 @@
     <section class="users">
 
         <h2>Create User</h2>
-        <h3>Users: {{ user_count }}</h3>
 
         {% if error %}
         <p>{{ error }}</p>
@@ -47,7 +46,8 @@
             <input type="text" name="username" placeholder="Username">
             <input type="password" name="password" placeholder="Password">
             <select name="permissions">
-                <option value="admin">Admin (user will have access to this panel + full access to animal edition)</option>
+                <option value="admin">Admin (user will have access to this panel + full access to animal edition)
+                </option>
                 <option value="read-only">Read-Only (user can only read animal data)</option>
                 <option value="read-&-write">Read & Write (user can read,register and edit animal data)</option>
             </select>
@@ -55,17 +55,29 @@
 
         </form>
 
-
-        <section>
             <h2>Users</h2>
             <h3>Current Users: {{ user_count }}</h3>
 
+        <section class="userTable">
+            
+            <table>
+            <tr>
+                <td>Id</td>
+                <td>Username</td>
+                <td>Permissions</td>
+            </tr>
+
+
             {% for user in all_users %}
             <div class="user">
-                <p>Id: {{ user['id'] }}</p>
-                <p>Name: {{ user['name'] }}</p>
+                <tr>
+                    <td>{{ user['id'] }}</td>
+                    <td>{{ user['name'] }}</td>
+                    <td>{{ user['permissions'] }}</td>
+                </tr>
             </div>
             {% endfor %}
+            </table>
         </section>
     </section>
 
